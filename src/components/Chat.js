@@ -27,6 +27,7 @@ const Chat = ({cableApp}) => {
       user_id: currentUser.id,
       room_id: parseInt(currentRoom.room.id)
   }
+  console.log("message",message);
   fetch("http://localhost:3000/messages", {
             method: "POST",
             headers: {

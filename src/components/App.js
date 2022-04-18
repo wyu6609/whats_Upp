@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 function App({cableApp}) {
   const currentUser = useSelector((state)=> state.user.value)
   let navigate = useNavigate();
-  console.log(currentUser)
+  //console.log(currentUser)
     return (
     <Routes>
         <Route path="/" element={<Login />}/>
@@ -29,7 +29,7 @@ function App({cableApp}) {
 function ChatScreen({cableApp}){
   let navigate = useNavigate();
   const currentRoom = useSelector((state)=> state.room.value)
-  console.log(currentRoom)
+  //console.log(currentRoom)
   const [usersRooms, setUsersRooms] = useState([])
   const dispatch = useDispatch();
   useEffect(() => {
@@ -40,23 +40,14 @@ function ChatScreen({cableApp}){
       })
       .then(response => response.json())
       .then(result => {
-        console.log(result.data)
+        //console.log(result.data)
         dispatch(setValue(result.data.attributes));
         setUsersRooms(result.data.attributes.rooms);
       })
     }
   }, [])
-  const openChat = (id) => {
-    fetch(`http://localhost:3000/rooms/${id}`)
-        .then(response => response.json())
-        .then(result => {
-            dispatch(setRoomValue({
-              room: result.data,
-              users: result.data.attributes.users,
-              messages: result.data.attributes.messages
-          }))
-        })
-    navigate(`/rooms/${id}`)
+  const openChat = (room) => {
+    navigate(`/rooms/${room.id}`)
   };
   return(
     <div className="app">
