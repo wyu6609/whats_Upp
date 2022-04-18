@@ -7,13 +7,16 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MicIcon from "@mui/icons-material/Mic";
 import ChatWebSocket from './ChatWebSocket'
+import StatusWebSocket from './StatusWebSocket'
 import Message from './Message'
 import { useSelector } from 'react-redux'
+import UserMenu from './UserMenu'
 const Chat = ({cableApp}) => {
   const [seed, setSeed] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const currentRoom = useSelector((state)=> state.room.value)
   const currentUser = useSelector((state)=> state.user.value)
+  const [userMenu, setUserMenu] = useState(false);
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
@@ -41,6 +44,13 @@ const Chat = ({cableApp}) => {
             
         })
   }
+  function handelShowUsers(){
+    if(userMenu == false){
+      setUserMenu(true)
+    }else{
+      setUserMenu(false)
+    }
+  }
   return (
     <div className="chat">
       <div className="chat-header">
@@ -57,10 +67,11 @@ const Chat = ({cableApp}) => {
             <AttachFileIcon />
           </IconButton>
           <IconButton>
-            <MoreVertIcon />
+            <MoreVertIcon onClick={handelShowUsers}/>
           </IconButton>
         </div>
       </div>
+      {userMenu ? <UserMenu/>: null}
       <div className="chat-body">
         {currentRoom.messages.map((m)=>{
           if(m.user_id == currentUser.id){
@@ -85,6 +96,7 @@ const Chat = ({cableApp}) => {
         </IconButton>
       </div>
       <ChatWebSocket cableApp={cableApp}/>
+      {/* <StatusWebSocket cableApp={cableApp}/> */}
     </div>
   );
 };

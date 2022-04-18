@@ -9,6 +9,12 @@
   align-items: center;
   border-bottom: 1px solid lightgray;
 }
+.chat-header-side {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
 
 .chat-headerInfo {
   flex: 1;
@@ -91,4 +97,7 @@
 .chat-footer > .MuiSvgIcon-root {
   padding: 10px;
   color: gray;
+}
+.user-menu-card{
+  margin-left: 10px;
 }
