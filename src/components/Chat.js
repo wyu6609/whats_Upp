@@ -20,10 +20,10 @@ const Chat = ({cableApp}) => {
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
-  const handleChange = (e)=>{
+  const handleChange = (e) => {
     setNewMessage(e.target.value);
-  }
-  const handleSubmit = (e) =>{
+  };
+  const handleSubmit = (e) => {
     e.preventDefault();
     const message = {
       content: newMessage,
@@ -73,11 +73,11 @@ const Chat = ({cableApp}) => {
       </div>
       {userMenu ? <UserMenu/>: null}
       <div className="chat-body">
-        {currentRoom.messages.map((m)=>{
-          if(m.user_id == currentUser.id){
-            return (<Message key={m.id} m={m} sender={true}/>);
-          }else{
-            return (<Message key={m.id} m={m} sender={false}/>);
+        {currentRoom.messages.map((m) => {
+          if (m.user_id == currentUser.id) {
+            return <Message key={m.id} m={m} sender={true} />;
+          } else {
+            return <Message key={m.id} m={m} sender={false} />;
           }
         })}
       </div>
@@ -87,14 +87,18 @@ const Chat = ({cableApp}) => {
           <InsertEmoticonIcon />
         </IconButton>
 
-        <form onSubmit={(e)=>handleSubmit(e)}>
-          <input placeholder="Type a message..." type="text" value={newMessage} onChange={(e)=>handleChange(e)} />
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <input
+            placeholder="Type a message..."
+            type="text"
+            value={newMessage}
+            onChange={(e) => handleChange(e)}
+          />
           <button>Send a message</button>
         </form>
         <IconButton>
-          <MicIcon />
+          <MicIcon onClick={console.log("clicked")} />
         </IconButton>
-      </div>
       <ChatWebSocket cableApp={cableApp}/>
       {/* <StatusWebSocket cableApp={cableApp}/> */}
     </div>
