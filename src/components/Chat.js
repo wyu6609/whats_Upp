@@ -102,6 +102,7 @@ const Chat = ({cableApp}) => {
       <ChatWebSocket cableApp={cableApp}/>
       {/* <StatusWebSocket cableApp={cableApp}/> */}
     </div>
+    </div>
   );
 };
 
