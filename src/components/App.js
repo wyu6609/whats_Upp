@@ -6,6 +6,7 @@ import { Routes, Route, Navigate} from "react-router-dom";
 import Login from "./Login";
 import {useSelector, useDispatch} from 'react-redux';
 import {setValue} from '../redux/user'
+import {setRoomValue} from '../redux/room'
 import { useNavigate } from "react-router-dom";
 function App({cableApp}) {
   const currentUser = useSelector((state)=> state.user.value)
@@ -26,23 +27,36 @@ function App({cableApp}) {
   );
 }
 function ChatScreen({cableApp}){
+  let navigate = useNavigate();
+  const currentRoom = useSelector((state)=> state.room.value)
+  console.log(currentRoom)
   const [usersRooms, setUsersRooms] = useState([])
   const dispatch = useDispatch();
   useEffect(() => {
     let token = localStorage.getItem('jwt_token')
     if (token) {
       fetch('http://localhost:3000/profile', {
-        headers: { "Authentication": `Bearer ${token}` }
+        headers: { "Authentication": `Bearer ${token}`}
       })
       .then(response => response.json())
       .then(result => {
+        console.log(result.data)
         dispatch(setValue(result.data.attributes));
         setUsersRooms(result.data.attributes.rooms);
       })
     }
   }, [])
-  const openChat = () => {
-
+  const openChat = (id) => {
+    fetch(`http://localhost:3000/rooms/${id}`)
+        .then(response => response.json())
+        .then(result => {
+            dispatch(setRoomValue({
+              room: result.data,
+              users: result.data.attributes.users,
+              messages: result.data.attributes.messages
+          }))
+        })
+    navigate(`/rooms/${id}`)
   };
   return(
     <div className="app">

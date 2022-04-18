@@ -30,7 +30,6 @@ function Login() {
         if (data.authenticated) {
             localStorage.setItem('jwt_token', data.token)
             dispatch(setValue(data.user.data));
-            console.log(data);
         } else {
             alert('Password/Username combination not found')
         }   

@@ -1,13 +1,13 @@
 import React,{useEffect} from 'react'
 import {useDispatch } from 'react-redux'
-import {setValue} from '../redux/room'
+import {setRoomValue} from '../redux/room'
 function ChatWebSocket({cableApp}) {
     const dispatch = useDispatch();
     const getRoomData = (id) => {
         fetch(`http://localhost:3000/rooms/${id}`)
         .then(response => response.json())
         .then(result => {
-            dispatch(setValue({
+            dispatch(setRoomValue({
               room: result.data,
               users: result.data.attributes.users,
               messages: result.data.attributes.messages
@@ -15,7 +15,7 @@ function ChatWebSocket({cableApp}) {
         })
       }
       const updateApp = (newRoom) => {
-        dispatch(setValue({
+        dispatch(setRoomValue({
             room: newRoom.room.data,
             users: newRoom.users,
             messages: newRoom.messages

@@ -45,8 +45,8 @@ const Chat = ({cableApp}) => {
       <div className="chat-header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat-headerInfo">
-          <h3>Room name</h3>
-          <p>Last seen at...</p>
+          {/* <h3>{currentRoom.room.attributes.name}</h3> */}
+          <p></p>
         </div>
         <div className="chat-headerRight">
           <IconButton>
@@ -62,7 +62,11 @@ const Chat = ({cableApp}) => {
       </div>
       <div className="chat-body">
         {currentRoom.messages.map((m)=>{
-        return (<Message key={m.id} m={m} />);
+          if(m.user_id == currentUser.id){
+            return (<Message key={m.id} m={m} sender={true}/>);
+          }else{
+            return (<Message key={m.id} m={m} sender={false}/>);
+          }
         })}
       </div>
 

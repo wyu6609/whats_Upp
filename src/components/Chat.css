@@ -24,7 +24,7 @@
   position: relative;
   font-size: 16px;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: #d4ebf2  ;
   width: fit-content;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -59,7 +59,9 @@
   margin-left: 10px;
   font-size: xx-small;
 }
-
+.chat-sender{
+  background-color: #d4ebf2  ;
+}
 .chat-receiver {
   margin-left: auto;
   background-color: #dcf8c6;

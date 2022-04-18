@@ -10,13 +10,13 @@ export const roomSlice = createSlice({
     },
   },
   reducers: {
-    setValue: (state, action) => {
+    setRoomValue: (state, action) => {
       state.value = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {setValue } = roomSlice.actions
+export const {setRoomValue } = roomSlice.actions
 
 export default roomSlice.reducer
