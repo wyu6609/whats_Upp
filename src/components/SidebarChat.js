@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import "./SidebarChat.css";
-
-const SidebarChat = ({ addNewChat }) => {
+import {Link } from "react-router-dom";
+const SidebarChat = ({ addNewChat, room, openChat }) => {
   const [seed, setSeed] = useState("");
 
   useEffect(() => {
@@ -15,13 +15,13 @@ const SidebarChat = ({ addNewChat }) => {
       // do some database stuff...
     }
   };
-
   return !addNewChat ? (
-    <div className="sidebarChat">
+  
+    <div className="sidebarChat" onClick={()=>openChat(room.id)}>
       <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
       <div className="sidebarChat-info">
-        <h2>Room Name</h2>
-        <p>Last message...</p>
+        <h2>{room.name}</h2>
+        <p>{room.description}</p>
       </div>
     </div>
   ) : (

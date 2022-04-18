@@ -6,19 +6,47 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MicIcon from "@mui/icons-material/Mic";
-const Chat = () => {
+import ChatWebSocket from './ChatWebSocket'
+import Message from './Message'
+import { useSelector } from 'react-redux'
+const Chat = ({cableApp}) => {
   const [seed, setSeed] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+  const currentRoom = useSelector((state)=> state.room.value)
+  const currentUser = useSelector((state)=> state.user.value)
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
-
+  const handleChange = (e)=>{
+    setNewMessage(e.target.value);
+  }
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    const message = {
+      content: newMessage,
+      user_id: currentUser.id,
+      room_id: parseInt(currentRoom.room.id)
+  }
+  fetch("http://localhost:3000/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({message: message})
+        })
+        .then(resp => resp.json())
+        .then(result => {
+            
+        })
+  }
   return (
     <div className="chat">
       <div className="chat-header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat-headerInfo">
-          <h3>Room name</h3>
-          <p>Last seen at...</p>
+          {/* <h3>{currentRoom.room.attributes.name}</h3> */}
+          <p></p>
         </div>
         <div className="chat-headerRight">
           <IconButton>
@@ -33,12 +61,13 @@ const Chat = () => {
         </div>
       </div>
       <div className="chat-body">
-        {/* if user logged in then evaluate chatmessage true */}
-        <p className={`chat-message ${true && "chat-receiver"}`}>
-          <span className="chat-name">Will Yu</span>
-          yrrrrr
-          <span className="chat-timestamp">4:20pm</span>
-        </p>
+        {currentRoom.messages.map((m)=>{
+          if(m.user_id == currentUser.id){
+            return (<Message key={m.id} m={m} sender={true}/>);
+          }else{
+            return (<Message key={m.id} m={m} sender={false}/>);
+          }
+        })}
       </div>
 
       <div className="chat-footer">
@@ -46,14 +75,15 @@ const Chat = () => {
           <InsertEmoticonIcon />
         </IconButton>
 
-        <form>
-          <input placeholder="Type a message..." type="text" />
+        <form onSubmit={(e)=>handleSubmit(e)}>
+          <input placeholder="Type a message..." type="text" value={newMessage} onChange={(e)=>handleChange(e)} />
           <button>Send a message</button>
         </form>
         <IconButton>
           <MicIcon />
         </IconButton>
       </div>
+      <ChatWebSocket cableApp={cableApp}/>
     </div>
   );
 };

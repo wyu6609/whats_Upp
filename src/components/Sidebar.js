@@ -6,8 +6,9 @@ import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SidebarChat from "./SidebarChat";
-
-const Sidebar = () => {
+import { useSelector, useDispatch } from 'react-redux'
+const Sidebar = ({usersRooms, openChat}) => {
+ 
   return (
     <div className="sidebar">
       <div className="sidebar-header">
@@ -32,11 +33,10 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="sidebar-chats">
-        {/* MAP CHATS ROOM ARRAY HERE */}
-        <SidebarChat addNewChat />
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+      <SidebarChat addNewChat />
+        {usersRooms.map(room=>{
+          return (<SidebarChat key={room.id} room={room} openChat={openChat}/>)
+        })}
       </div>
     </div>
   );
