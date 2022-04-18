@@ -5,13 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { setValue } from "../redux/user";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
-
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showLogin, setShowLogin] = useState(true);
   return (
     <div className="Login">
-      <h1>WhatsApp Clone </h1>
+      <h1>WhatsApp 2.0 </h1>
       {showLogin ? (
         <div>
           <LoginForm showLogin={showLogin} setShowLogin={setShowLogin} />

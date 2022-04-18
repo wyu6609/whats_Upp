@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import "./Login.css";
-
+import { useNavigate } from "react-router-dom";
 import { setValue } from "../redux/user";
 function SignupForm() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [password_confirmation, setPassword_Confirmation] = useState("");
 
   //create new username
   function handleChange(e) {
@@ -19,8 +19,8 @@ function SignupForm() {
     if (e.target.name === "password") {
       setPassword(e.target.value);
     }
-    if (e.target.name === "passwordconfirmation") {
-      setPasswordConfirmation(e.target.value);
+    if (e.target.name === "password_confirmation") {
+      setPassword_Confirmation(e.target.value);
     }
   }
 
@@ -36,17 +36,18 @@ function SignupForm() {
       body: JSON.stringify({
         username,
         password,
-        passwordConfirmation,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log();
         if (data.authenticated) {
           localStorage.setItem("jwt_token", data.token);
           dispatch(setValue(data.user.data));
-          /*navigate to login screen */
+          /*navigate to user room */
+          navigate("/rooms/1");
         } else {
-          alert("Password/Username combination not found");
+          alert("Signup failed");
         }
       });
   }
@@ -56,7 +57,7 @@ function SignupForm() {
     return (
       username.length > 0 &&
       password.length > 0 &&
-      passwordConfirmation.length > 0
+      password_confirmation.length > 0
     );
   }
   return (
@@ -87,9 +88,9 @@ function SignupForm() {
           <Form.Label>Password Confirmation</Form.Label>
           <Form.Control
             type="password"
-            name="passwordconfirmation"
+            name="password_confirmation"
             onChange={(e) => handleChange(e)}
-            value={passwordConfirmation}
+            value={password_confirmation}
             placeholder="password confirmation"
           />
         </Form.Group>

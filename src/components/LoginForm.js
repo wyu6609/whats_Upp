@@ -34,7 +34,7 @@ function LoginForm() {
         if (data.authenticated) {
           localStorage.setItem("jwt_token", data.token);
           dispatch(setValue(data.user.data));
-          /*navigate to login screen */
+          /*navigate to user Room */
           navigate("/rooms/1");
         } else {
           alert("Password/Username combination not found");
