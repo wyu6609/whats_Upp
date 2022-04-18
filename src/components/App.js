@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 function App({ cableApp }) {
   const currentUser = useSelector((state) => state.user.value);
   let navigate = useNavigate();
-  console.log(currentUser);
+  //console.log(currentUser)
+    return (
 
-  return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<ChatScreen cableApp={cableApp} />} />
@@ -29,13 +29,16 @@ function App({ cableApp }) {
 }
 function ChatScreen({ cableApp }) {
   let navigate = useNavigate();
-  const currentRoom = useSelector((state) => state.room.value);
-  console.log(currentRoom);
-  const [usersRooms, setUsersRooms] = useState([]);
+
+  const currentRoom = useSelector((state)=> state.room.value)
+  //console.log(currentRoom)
+  const [usersRooms, setUsersRooms] = useState([])
+
   const dispatch = useDispatch();
   useEffect(() => {
     let token = localStorage.getItem("jwt_token");
     if (token) {
+
       fetch("http://localhost:3000/profile", {
         headers: { Authentication: `Bearer ${token}` },
       })
@@ -46,20 +49,9 @@ function ChatScreen({ cableApp }) {
           setUsersRooms(result.data.attributes.rooms);
         });
     }
-  }, []);
-  const openChat = (id) => {
-    fetch(`http://localhost:3000/rooms/${id}`)
-      .then((response) => response.json())
-      .then((result) => {
-        dispatch(
-          setRoomValue({
-            room: result.data,
-            users: result.data.attributes.users,
-            messages: result.data.attributes.messages,
-          })
-        );
-      });
-    navigate(`/rooms/${id}`);
+  }, [])
+  const openChat = (room) => {
+    navigate(`/rooms/${room.id}`)
   };
   return (
     <div className="app">

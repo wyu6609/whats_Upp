@@ -6,14 +6,17 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MicIcon from "@mui/icons-material/Mic";
-import ChatWebSocket from "./ChatWebSocket";
-import Message from "./Message";
-import { useSelector } from "react-redux";
-const Chat = ({ cableApp }) => {
+import ChatWebSocket from './ChatWebSocket'
+import StatusWebSocket from './StatusWebSocket'
+import Message from './Message'
+import { useSelector } from 'react-redux'
+import UserMenu from './UserMenu'
+const Chat = ({cableApp}) => {
   const [seed, setSeed] = useState("");
   const [newMessage, setNewMessage] = useState("");
-  const currentRoom = useSelector((state) => state.room.value);
-  const currentUser = useSelector((state) => state.user.value);
+  const currentRoom = useSelector((state)=> state.room.value)
+  const currentUser = useSelector((state)=> state.user.value)
+  const [userMenu, setUserMenu] = useState(false);
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
@@ -25,19 +28,29 @@ const Chat = ({ cableApp }) => {
     const message = {
       content: newMessage,
       user_id: currentUser.id,
-      room_id: parseInt(currentRoom.room.id),
-    };
-    fetch("http://localhost:3000/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ message: message }),
-    })
-      .then((resp) => resp.json())
-      .then((result) => {});
-  };
+      room_id: parseInt(currentRoom.room.id)
+  }
+  console.log("message",message);
+  fetch("http://localhost:3000/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({message: message})
+        })
+        .then(resp => resp.json())
+        .then(result => {
+            
+        })
+  }
+  function handelShowUsers(){
+    if(userMenu == false){
+      setUserMenu(true)
+    }else{
+      setUserMenu(false)
+    }
+  }
   return (
     <div className="chat">
       <div className="chat-header">
@@ -54,10 +67,11 @@ const Chat = ({ cableApp }) => {
             <AttachFileIcon />
           </IconButton>
           <IconButton>
-            <MoreVertIcon />
+            <MoreVertIcon onClick={handelShowUsers}/>
           </IconButton>
         </div>
       </div>
+      {userMenu ? <UserMenu/>: null}
       <div className="chat-body">
         {currentRoom.messages.map((m) => {
           if (m.user_id == currentUser.id) {
@@ -85,8 +99,8 @@ const Chat = ({ cableApp }) => {
         <IconButton>
           <MicIcon onClick={console.log("clicked")} />
         </IconButton>
-      </div>
-      <ChatWebSocket cableApp={cableApp} />
+      <ChatWebSocket cableApp={cableApp}/>
+      {/* <StatusWebSocket cableApp={cableApp}/> */}
     </div>
   );
 };
