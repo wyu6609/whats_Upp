@@ -1,25 +1,27 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import * as serviceWorker from './serviceWorker';
-import actionCable from 'actioncable';
+import * as serviceWorker from "./serviceWorker";
+import actionCable from "actioncable";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from 'react-redux';
-import store from './redux/store';
-const CableApp = {}
+import { Provider } from "react-redux";
+import store from "./redux/store";
+const CableApp = {};
 
-CableApp.cable = actionCable.createConsumer('ws://localhost:3000/cable')
+CableApp.cable = actionCable.createConsumer("ws://localhost:3000/cable");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-  <React.StrictMode>
-    <BrowserRouter>
-      <App cableApp={CableApp}/>
-    </BrowserRouter>
-  </React.StrictMode>
+    <React.StrictMode>
+      <BrowserRouter>
+        <App cableApp={CableApp} />
+      </BrowserRouter>
+    </React.StrictMode>
   </Provider>
 );
 
