@@ -6,13 +6,12 @@ import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SidebarChat from "./SidebarChat";
-import { useSelector, useDispatch } from 'react-redux'
-const Sidebar = ({usersRooms, openChat}) => {
- 
+import { useSelector, useDispatch } from "react-redux";
+const Sidebar = ({ usersRooms, openChat }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <Avatar />
+        <Avatar src="/whatsapp_icon.png" alt="whatsapp_logo" />
         <div className="sidebar-header-right">
           <IconButton>
             <DonutLargeIcon />
@@ -33,9 +32,9 @@ const Sidebar = ({usersRooms, openChat}) => {
         </div>
       </div>
       <div className="sidebar-chats">
-      <SidebarChat addNewChat />
-        {usersRooms.map(room=>{
-          return (<SidebarChat key={room.id} room={room} openChat={openChat}/>)
+        <SidebarChat addNewChat />
+        {usersRooms.map((room) => {
+          return <SidebarChat key={room.id} room={room} openChat={openChat} />;
         })}
       </div>
     </div>
