@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 function App({ cableApp }) {
   const currentUser = useSelector((state) => state.user.value);
   let navigate = useNavigate();
-  //console.log(currentUser)
     return (
 
     <Routes>
