@@ -43,7 +43,6 @@ function ChatScreen({ cableApp }) {
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result.data);
           dispatch(setValue(result.data.attributes));
           setUsersRooms(result.data.attributes.rooms);
         });
