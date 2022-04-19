@@ -5,14 +5,14 @@
     color: white;
     font-weight: bold;
   }
-  h1 {
+  .Login h1 {
     font-family: "Helvetica";
     color: rgb(71, 199, 88);
     text-align: center;
     font-weight: bold;
     padding: 10px;
   }
-  p {
+  .Login p {
     color: rgb(71, 199, 88);
     text-align: center;
     margin: 0 auto;

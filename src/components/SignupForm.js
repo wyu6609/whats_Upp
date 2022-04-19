@@ -27,29 +27,33 @@ function SignupForm() {
   //POST-CREATE REQUEST
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:3000/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log();
-        if (data.authenticated) {
-          localStorage.setItem("jwt_token", data.token);
-          dispatch(setValue(data.user.data));
-          /*navigate to user room */
-          navigate("/rooms/1");
-        } else {
-          alert("Signup failed");
-        }
-      });
+    if (password === password_confirmation) {
+      fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log();
+          if (data.authenticated) {
+            localStorage.setItem("jwt_token", data.token);
+            dispatch(setValue(data.user.data));
+            /*navigate to user room */
+            navigate("/rooms/1");
+          } else {
+            alert("Signup failed");
+          }
+        });
+    } else {
+      alert("passwords do not match!");
+    }
   }
 
   ///
