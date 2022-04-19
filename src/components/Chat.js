@@ -12,6 +12,8 @@ import Message from "./Message";
 import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
 
+import InputEmoji from "react-input-emoji";
+
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
@@ -29,6 +31,12 @@ const Chat = ({ cableApp }) => {
   const currentRoom = useSelector((state) => state.room.value);
   const currentUser = useSelector((state) => state.user.value);
   const [userMenu, setUserMenu] = useState(false);
+
+  const [text, setText] = useState("");
+
+  function handleOnEnter(text) {
+    console.log("enter", text);
+  }
 
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
@@ -72,8 +80,7 @@ const Chat = ({ cableApp }) => {
     };
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const message = {
       content: newMessage,
       user_id: currentUser.id,
@@ -130,22 +137,30 @@ const Chat = ({ cableApp }) => {
       </div>
 
       <div className="chat-footer">
-        <IconButton>
-          <InsertEmoticonIcon />
+        <IconButton onClick={() => setIsListening((prevState) => !prevState)}>
+          <MicIcon color={isListening ? "success" : "disabled"} />
         </IconButton>
 
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <input
+        <form>
+          <InputEmoji
+            // value={text}
+            // onChange={setText}====
+            cleanOnEnter
+            onEnter={() => handleSubmit()}
+            // placeholder="Type a message"
+            placeholder={isListening ? "Listening..." : "Type a message..."}
+            type="text"
+            value={newMessage}
+            onChange={setNewMessage}
+          />
+          {/* <input
             placeholder={isListening ? "Listening..." : "Type a message..."}
             type="text"
             value={newMessage}
             onChange={(e) => handleChange(e)}
-          />
-          <button>Send a message</button>
+          /> */}
+          {/* <button>Send a message</button> */}
         </form>
-        <IconButton onClick={() => setIsListening((prevState) => !prevState)}>
-          <MicIcon />
-        </IconButton>
 
         <ChatWebSocket cableApp={cableApp} />
         {/* <StatusWebSocket cableApp={cableApp}/> */}
