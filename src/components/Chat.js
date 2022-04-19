@@ -143,11 +143,8 @@ const Chat = ({ cableApp }) => {
 
         <form>
           <InputEmoji
-            // value={text}
-            // onChange={setText}====
             cleanOnEnter
             onEnter={() => handleSubmit()}
-            // placeholder="Type a message"
             placeholder={isListening ? "Listening..." : "Type a message..."}
             type="text"
             value={newMessage}
