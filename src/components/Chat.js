@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useRef } from "react";
 import "./Chat.css";
 import { Avatar, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,6 +22,7 @@ mic.interimResults = true;
 mic.lang = "en-US";
 
 const Chat = ({ cableApp }) => {
+  const messageEl = useRef(null);
   const [messagePlaceHolder, setMessagePlaceHolder] =
     useState("Type a message...");
   const [isListening, setIsListening] = useState(false);
@@ -32,7 +33,15 @@ const Chat = ({ cableApp }) => {
   const currentUser = useSelector((state) => state.user.value);
   const [userMenu, setUserMenu] = useState(false);
 
-  const [text, setText] = useState("");
+  //scrolls to the bottom on message update
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener("DOMNodeInserted", (event) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: "smooth" });
+      });
+    }
+  }, []);
 
   function handleOnEnter(text) {
     console.log("enter", text);
@@ -126,7 +135,7 @@ const Chat = ({ cableApp }) => {
         </div>
       </div>
       {userMenu ? <UserMenu /> : null}
-      <div className="chat-body">
+      <div className="chat-body" ref={messageEl}>
         {currentRoom.messages.map((m) => {
           if (m.user_id == currentUser.id) {
             return <Message key={m.id} m={m} sender={true} />;

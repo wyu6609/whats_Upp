@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { setValue } from "../redux/user";
-function SignupForm() {
+function SignupForm({ setShowLogin, showLogin }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -45,8 +45,9 @@ function SignupForm() {
           if (data.authenticated) {
             localStorage.setItem("jwt_token", data.token);
             dispatch(setValue(data.user.data));
-            /*navigate to user room */
-            navigate("/rooms/1");
+            console.log("data authenticated");
+            /*navigate to login page */
+            setShowLogin(!showLogin);
           } else {
             alert("Signup failed");
           }
@@ -88,7 +89,7 @@ function SignupForm() {
             placeholder="password"
           />
         </Form.Group>
-        <Form.Group size="lg" controlId="password">
+        <Form.Group size="lg" controlId="passwordConfirmation">
           <Form.Label>Password Confirmation</Form.Label>
           <Form.Control
             type="password"
