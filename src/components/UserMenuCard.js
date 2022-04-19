@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 
-function UserMenuCard() {
+function UserMenuCard({m}) {
     const [seed, setSeed] = useState("");
-
     useEffect(() => {
       setSeed(Math.floor(Math.random() * 5000));
     }, []);
   return (
-    <>
-    <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+    <div className='user-menu-card'>
     <div className="sidebarChat-info">
-      <h2>username</h2>
-      <p>online</p>
+      <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+      <h2>{m.attributes.username}</h2>
+      <p>{m.attributes.online}</p>
     </div>
-    </>
+    </div>
   )
 }
 

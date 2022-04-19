@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
+
+import { useSelector} from 'react-redux'
 import UserMenuCard from "./UserMenuCard"
 function UserMenu() {
-    const [seed, setSeed] = useState("");
-
-    useEffect(() => {
-      setSeed(Math.floor(Math.random() * 5000));
-    }, []);
+    const currentRoom = useSelector((state)=> state.room.value)
   return (
     <div className="chat-header">
-        <UserMenuCard className="user-menu-card"/>
-        <UserMenuCard className="user-menu-card"/>
-        <UserMenuCard className="user-menu-card"/>
-        <UserMenuCard className="user-menu-card"/>
+    {currentRoom.users.data.map((m)=>{
+        return (<UserMenuCard m={m}/>)
+    })}
     </div>
   )
 }
