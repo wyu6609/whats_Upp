@@ -56,3 +56,9 @@
   border-radius: 10px;
   overflow: scroll;
 }
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+}
