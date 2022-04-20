@@ -11,8 +11,7 @@ import { useNavigate } from "react-router-dom";
 function App({ cableApp }) {
   const currentUser = useSelector((state) => state.user.value);
   let navigate = useNavigate();
-    return (
-
+  return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<ChatScreen cableApp={cableApp} />} />
@@ -29,28 +28,26 @@ function App({ cableApp }) {
 function ChatScreen({ cableApp }) {
   let navigate = useNavigate();
 
-  const currentRoom = useSelector((state)=> state.room.value)
+  const currentRoom = useSelector((state) => state.room.value);
   //console.log(currentRoom)
-  const [usersRooms, setUsersRooms] = useState([])
+  const [usersRooms, setUsersRooms] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
     let token = localStorage.getItem("jwt_token");
     if (token) {
-
       fetch("http://localhost:3000/profile", {
         headers: { Authentication: `Bearer ${token}` },
       })
         .then((response) => response.json())
         .then((result) => {
-          console.log(result.data);
           dispatch(setValue(result.data.attributes));
           setUsersRooms(result.data.attributes.rooms);
         });
     }
-  }, [])
+  }, []);
   const openChat = (room) => {
-    navigate(`/rooms/${room.id}`)
+    navigate(`/rooms/${room.id}`);
   };
   return (
     <div className="app">

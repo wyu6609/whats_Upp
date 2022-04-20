@@ -98,7 +98,18 @@
   padding: 10px;
   color: gray;
 }
-.user-menu-card{
+.user-menu-card {
   margin-left: 20px;
   margin-right: 20px;
+}
+.search-message {
+  text-align: center;
+  background-color: white;
+  width: 100%;
+  height: 35px;
+  border-radius: 20px;
+  border: none;
+}
+.search-message-hide {
+  display: none;
 }

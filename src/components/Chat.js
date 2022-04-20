@@ -33,6 +33,17 @@ const Chat = ({ cableApp }) => {
   const currentUser = useSelector((state) => state.user.value);
   const [userMenu, setUserMenu] = useState(false);
 
+  const [searchBarOn, setSearchBarOn] = useState(false);
+
+  //searchFilter
+  /////////////////////////////////////////////////////////////////////////////////////
+  const [chatSearch, setChatSearch] = useState("");
+  const searchBarHandler = (event) => {
+    setChatSearch(event.target.value);
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+
   //scrolls to the bottom on message update
   useEffect(() => {
     if (messageEl) {
@@ -54,7 +65,7 @@ const Chat = ({ cableApp }) => {
   const handleChange = (e) => {
     setNewMessage(e.target.value);
   };
-
+  // voice to chat stuff
   useEffect(() => {
     handleListen();
   }, [isListening]);
@@ -107,6 +118,7 @@ const Chat = ({ cableApp }) => {
       .then((resp) => resp.json())
       .then((result) => {});
   };
+
   function handelShowUsers() {
     if (userMenu == false) {
       setUserMenu(true);
@@ -114,6 +126,7 @@ const Chat = ({ cableApp }) => {
       setUserMenu(false);
     }
   }
+
   return (
     <div className="chat">
       <div className="chat-header">
@@ -123,12 +136,21 @@ const Chat = ({ cableApp }) => {
           <p></p>
         </div>
         <div className="chat-headerRight">
-          <IconButton>
+          <input
+            className={`search-message ${
+              searchBarOn ? "" : "search-message-hide"
+            }`}
+            placeholder="Search messages"
+            onChange={searchBarHandler}
+          />
+          <IconButton
+            onClick={() => {
+              setSearchBarOn(!searchBarOn);
+            }}
+          >
             <SearchIcon />
           </IconButton>
-          <IconButton>
-            <AttachFileIcon />
-          </IconButton>
+
           <IconButton onClick={handelShowUsers}>
             <MoreVertIcon />
           </IconButton>
@@ -159,13 +181,6 @@ const Chat = ({ cableApp }) => {
             value={newMessage}
             onChange={setNewMessage}
           />
-          {/* <input
-            placeholder={isListening ? "Listening..." : "Type a message..."}
-            type="text"
-            value={newMessage}
-            onChange={(e) => handleChange(e)}
-          /> */}
-          {/* <button>Send a message</button> */}
         </form>
 
         <ChatWebSocket cableApp={cableApp} />
