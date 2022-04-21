@@ -31,6 +31,7 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
     }else{
       setNewChatform(false)
     }
+    fetchProfile();
   }
   function handleChange(e){
     if (e.target.name === "room") {
