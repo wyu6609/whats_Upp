@@ -5,7 +5,8 @@ const DropDownBtn = ({ usersRooms, openChat }) => {
   return (
     <Dropdown>
       <Dropdown.Toggle
-        variant="secondary"
+        size="xs"
+        variant="success"
         id="dropdown-basic"
       ></Dropdown.Toggle>
 
