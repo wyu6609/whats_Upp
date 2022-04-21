@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import "./SidebarChat.css";
 import {Link } from "react-router-dom";
-const SidebarChat = ({ addNewChat, room, openChat }) => {
+const SidebarChat = ({ addNewChat, room, openChat,handleClick }) => {
   const [seed, setSeed] = useState("");
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const SidebarChat = ({ addNewChat, room, openChat }) => {
   };
   return !addNewChat ? (
   
-    <div className="sidebarChat" onClick={()=>openChat(room)}>
+    <div className="sidebarChat no-select" onClick={()=>openChat(room)}>
       <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
       <div className="sidebarChat-info">
         <h2>{room.name}</h2>
@@ -25,7 +25,7 @@ const SidebarChat = ({ addNewChat, room, openChat }) => {
       </div>
     </div>
   ) : (
-    <div onClick={createChat} className="sidebarChat">
+    <div onClick={()=>handleClick()} className="sidebarChat no-select">
       <h2>Add new Chat</h2>
     </div>
   );

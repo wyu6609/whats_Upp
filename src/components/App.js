@@ -11,6 +11,23 @@ import { useNavigate } from "react-router-dom";
 function App({ cableApp }) {
   const currentUser = useSelector((state) => state.user.value);
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+  let token = localStorage.getItem("jwt_token");
+  function fetchProfile() {
+    fetch("http://localhost:3000/profile", {
+      headers: { Authentication: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        dispatch(setValue(result.data.attributes));
+      });
+  }
+  useEffect(() => {
+    let token = localStorage.getItem("jwt_token");
+    if (token) {
+      fetchProfile();
+    }
+  }, [])
     return (
 
     <Routes>
@@ -19,9 +36,7 @@ function App({ cableApp }) {
       <Route
         exact
         path="/rooms/:id"
-        element={
-          currentUser ? <ChatScreen cableApp={cableApp} /> : navigate("/")
-        }
+        element={currentUser ? <ChatScreen cableApp={cableApp} /> : navigate("/")}
       />
     </Routes>
   );
@@ -31,21 +46,24 @@ function ChatScreen({ cableApp }) {
 
   const currentRoom = useSelector((state)=> state.room.value)
   //console.log(currentRoom)
+  let token = localStorage.getItem("jwt_token");
   const [usersRooms, setUsersRooms] = useState([])
 
   const dispatch = useDispatch();
+  function fetchProfile() {
+    fetch("http://localhost:3000/profile", {
+      headers: { Authentication: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        dispatch(setValue(result.data.attributes));
+        setUsersRooms(result.data.attributes.rooms);
+      });
+  }
   useEffect(() => {
     let token = localStorage.getItem("jwt_token");
     if (token) {
-
-      fetch("http://localhost:3000/profile", {
-        headers: { Authentication: `Bearer ${token}` },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          dispatch(setValue(result.data.attributes));
-          setUsersRooms(result.data.attributes.rooms);
-        });
+      fetchProfile();
     }
   }, [])
   const openChat = (room) => {
@@ -54,7 +72,7 @@ function ChatScreen({ cableApp }) {
   return (
     <div className="app">
       <div className="app__body">
-        <Sidebar usersRooms={usersRooms} openChat={openChat} />
+        <Sidebar usersRooms={usersRooms} openChat={openChat} fetchProfile={fetchProfile}/>
         <Chat cableApp={cableApp} />
       </div>
     </div>

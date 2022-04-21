@@ -52,6 +52,7 @@
   background-position: center;
   padding: 30px;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .chat-name {
