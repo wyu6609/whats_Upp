@@ -43,6 +43,13 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
     setChatSearch(event.target.value);
   };
 
+  let filteredMessages = currentRoom.messages.filter((message) => {
+    if (message.content.toLowerCase().includes(chatSearch.toLowerCase())) {
+      return message;
+    } else if (chatSearch == "") {
+      return message;
+    }
+  });
   ///////////////////////////////////////////////////////////////////////////////////////
 
   //scrolls to the bottom on message update
@@ -101,6 +108,12 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
     };
   };
 
+  let recieveSound = new Audio("/whatsAppSound.mp3");
+
+  const start = () => {
+    recieveSound.play();
+  };
+
   const handleSubmit = () => {
     const message = {
       content: newMessage,
@@ -117,7 +130,9 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       body: JSON.stringify({ message: message }),
     })
       .then((resp) => resp.json())
-      .then((result) => {});
+      .then((result) => {
+        start();
+      });
   };
 
   function handelShowUsers() {
@@ -162,7 +177,7 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       </div>
       {userMenu ? <UserMenu /> : null}
       <div className="chat-body" ref={messageEl}>
-        {currentRoom.messages.map((m) => {
+        {filteredMessages.map((m) => {
           if (m.user_id == currentUser.id) {
             return <Message key={m.id} m={m} sender={true} />;
           } else {

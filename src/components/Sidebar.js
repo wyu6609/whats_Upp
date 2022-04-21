@@ -1,5 +1,5 @@
-
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { IconButton, Avatar } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,7 +9,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SidebarChat from "./SidebarChat";
 import { useSelector, useDispatch } from "react-redux";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
+const Sidebar = ({ usersRooms, openChat, fetchProfile }) => {
+  const navigate = useNavigate();
   const [newChatform, setNewChatform] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
@@ -25,21 +26,21 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
       return chatroom;
     }
   });
-  function handleClick(){
-    if(newChatform === false){
-      setNewChatform(true)
-    }else{
-      setNewChatform(false)
+  function handleClick() {
+    if (newChatform === false) {
+      setNewChatform(true);
+    } else {
+      setNewChatform(false);
     }
   }
-  function handleChange(e){
+  function handleChange(e) {
     if (e.target.name === "room") {
       setRoomName(e.target.value);
     } else {
       setRoomDesc(e.target.value);
     }
   }
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
     fetch("http://localhost:3000/rooms", {
       method: "POST",
@@ -49,7 +50,7 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
       body: JSON.stringify({
         name: roomName,
         description: roomDesc,
-        user_id: currentUser.id
+        user_id: currentUser.id,
       }),
     })
       .then((response) => response.json())
@@ -67,7 +68,12 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
           className="sidebar-header-right"
           onClick={() => console.log("log out user")}
         >
-          <IconButton>
+          {/* SIGNOUT BTN AND FUNCTIONALITY HERE */}
+          <IconButton
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <ExitToAppIcon />
           </IconButton>
         </div>
@@ -84,15 +90,28 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
         </div>
       </div>
       <div className="sidebar-chats">
-
-        <SidebarChat addNewChat handleClick={handleClick}/>
-        {newChatform? <div className="sidebarChat no-select">
-          <form onSubmit={(e)=>handleSubmit(e)}>
-          <input type="text" name="room" value={roomName} onChange={(e)=>handleChange(e)} placeholder="Room Name"></input>
-          <input type="text" name="desc" value={roomDesc} onChange={(e)=>handleChange(e)} placeholder="Room Description"></input>
-          <button>CREATE</button>
-          </form>
-        </div>:null}
+        <SidebarChat addNewChat handleClick={handleClick} />
+        {newChatform ? (
+          <div className="sidebarChat no-select">
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <input
+                type="text"
+                name="room"
+                value={roomName}
+                onChange={(e) => handleChange(e)}
+                placeholder="Room Name"
+              ></input>
+              <input
+                type="text"
+                name="desc"
+                value={roomDesc}
+                onChange={(e) => handleChange(e)}
+                placeholder="Room Description"
+              ></input>
+              <button>CREATE</button>
+            </form>
+          </div>
+        ) : null}
         {filteredChatRoom.map((room) => {
           return <SidebarChat key={room.id} room={room} openChat={openChat} />;
         })}

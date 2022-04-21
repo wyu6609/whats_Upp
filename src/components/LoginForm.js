@@ -16,6 +16,18 @@ function LoginForm() {
       setPassword(e.target.value);
     }
   }
+  const audio_Signin = new Audio("/signin.mp3");
+  const playSignInTone = () => {
+    setTimeout(function () {
+      audio_Signin.play();
+    }, 500);
+  };
+
+  const audio_message = new Audio("/ringtone.mp3");
+  const playMessage = () => {
+    audio_message.play();
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
     fetch("http://localhost:3000/login", {
@@ -37,6 +49,7 @@ function LoginForm() {
           console.log("logged in");
           /*navigate to user Room */
           navigate("/rooms/1");
+          playSignInTone();
         } else {
           alert("Password/Username combination not found");
         }
