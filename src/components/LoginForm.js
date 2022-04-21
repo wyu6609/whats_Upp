@@ -48,7 +48,9 @@ function LoginForm() {
           dispatch(setValue(data.user.data));
           console.log("logged in");
           /*navigate to user Room */
-          navigate("/rooms/1");
+          // console.log("data",data.user.data.attributes.rooms[0].id);
+          let x = data.user.data.attributes.rooms[0].id
+          navigate(`/rooms/${x}`);
           playSignInTone();
         } else {
           alert("Password/Username combination not found");
