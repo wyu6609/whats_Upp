@@ -1,3 +1,4 @@
+
 import React,{useState} from "react";
 import "./Sidebar.css";
 import { IconButton, Avatar } from "@mui/material";
@@ -6,12 +7,24 @@ import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import ChatIcon from "@mui/icons-material/Chat";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SidebarChat from "./SidebarChat";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
   const [newChatform, setNewChatform] = useState(false);
   const [roomName, setRoomName] = useState("");
   const [roomDesc, setRoomDesc] = useState("");
   const currentUser = useSelector((state) => state.user.value);
+  const [chatroomSearch, setChatRoomSearch] = useState("");
+  const searchBarHandler_chatroom = (event) => {
+    setChatRoomSearch(event.target.value);
+  };
+  let filteredChatRoom = usersRooms.filter((chatroom) => {
+    if (chatroom.name.toLowerCase().includes(chatroomSearch.toLowerCase())) {
+      return chatroom;
+    } else if (chatroomSearch == "") {
+      return chatroom;
+    }
+  });
   function handleClick(){
     if(newChatform === false){
       setNewChatform(true)
@@ -45,19 +58,17 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
         fetchProfile();
       });
   }
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
         <Avatar src="/whatsapp_icon.png" alt="whatsapp_logo" />
-        <div className="sidebar-header-right">
+        <div
+          className="sidebar-header-right"
+          onClick={() => console.log("log out user")}
+        >
           <IconButton>
-            <DonutLargeIcon />
-          </IconButton>
-          <IconButton>
-            <ChatIcon />
-          </IconButton>
-          <IconButton>
-            <MoreVertIcon />
+            <ExitToAppIcon />
           </IconButton>
         </div>
       </div>
@@ -65,10 +76,15 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
       <div className="sidebar-search">
         <div className="sidebar-searchContainer">
           <SearchIcon />
-          <input placeholder="Search or start new chat" type="text" />
+          <input
+            placeholder="Search chat"
+            type="text"
+            onChange={searchBarHandler_chatroom}
+          />
         </div>
       </div>
       <div className="sidebar-chats">
+
         <SidebarChat addNewChat handleClick={handleClick}/>
         {newChatform? <div className="sidebarChat no-select">
           <form onSubmit={(e)=>handleSubmit(e)}>
@@ -77,7 +93,7 @@ const Sidebar = ({ usersRooms, openChat ,fetchProfile}) => {
           <button>CREATE</button>
           </form>
         </div>:null}
-        {usersRooms.map((room) => {
+        {filteredChatRoom.map((room) => {
           return <SidebarChat key={room.id} room={room} openChat={openChat} />;
         })}
       </div>

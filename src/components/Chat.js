@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
 
 import InputEmoji from "react-input-emoji";
+import DropDownBtn from "./DropDownBtn";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -21,7 +22,7 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = "en-US";
 
-const Chat = ({ cableApp }) => {
+const Chat = ({ cableApp, usersRooms, openChat }) => {
   const messageEl = useRef(null);
   const [messagePlaceHolder, setMessagePlaceHolder] =
     useState("Type a message...");
@@ -32,6 +33,17 @@ const Chat = ({ cableApp }) => {
   const currentRoom = useSelector((state) => state.room.value);
   const currentUser = useSelector((state) => state.user.value);
   const [userMenu, setUserMenu] = useState(false);
+
+  const [searchBarOn, setSearchBarOn] = useState(false);
+
+  //searchFilter
+  /////////////////////////////////////////////////////////////////////////////////////
+  const [chatSearch, setChatSearch] = useState("");
+  const searchBarHandler = (event) => {
+    setChatSearch(event.target.value);
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////
 
   //scrolls to the bottom on message update
   useEffect(() => {
@@ -54,7 +66,7 @@ const Chat = ({ cableApp }) => {
   const handleChange = (e) => {
     setNewMessage(e.target.value);
   };
-
+  // voice to chat stuff
   useEffect(() => {
     handleListen();
   }, [isListening]);
@@ -107,6 +119,7 @@ const Chat = ({ cableApp }) => {
       .then((resp) => resp.json())
       .then((result) => {});
   };
+
   function handelShowUsers() {
     if (userMenu == false) {
       setUserMenu(true);
@@ -114,6 +127,7 @@ const Chat = ({ cableApp }) => {
       setUserMenu(false);
     }
   }
+
   return (
     <div className="chat">
       <div className="chat-header">
@@ -123,15 +137,27 @@ const Chat = ({ cableApp }) => {
           <p></p>
         </div>
         <div className="chat-headerRight">
-          <IconButton>
+          <input
+            className={`search-message ${
+              searchBarOn ? "" : "search-message-hide"
+            }`}
+            placeholder="Search messages"
+            onChange={searchBarHandler}
+          />
+          <IconButton
+            onClick={() => {
+              setSearchBarOn(!searchBarOn);
+            }}
+          >
             <SearchIcon />
           </IconButton>
-          <IconButton>
-            <AttachFileIcon />
-          </IconButton>
+
           <IconButton onClick={handelShowUsers}>
             <MoreVertIcon />
           </IconButton>
+          <div className="dropdownmenu">
+            <DropDownBtn usersRooms={usersRooms} openChat={openChat} />
+          </div>
         </div>
       </div>
       {userMenu ? <UserMenu /> : null}
@@ -159,13 +185,6 @@ const Chat = ({ cableApp }) => {
             value={newMessage}
             onChange={setNewMessage}
           />
-          {/* <input
-            placeholder={isListening ? "Listening..." : "Type a message..."}
-            type="text"
-            value={newMessage}
-            onChange={(e) => handleChange(e)}
-          /> */}
-          {/* <button>Send a message</button> */}
         </form>
 
         <ChatWebSocket cableApp={cableApp} />

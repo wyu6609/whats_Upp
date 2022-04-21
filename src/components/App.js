@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 function App({ cableApp }) {
   const currentUser = useSelector((state) => state.user.value);
   let navigate = useNavigate();
+
   const dispatch = useDispatch();
   let token = localStorage.getItem("jwt_token");
   function fetchProfile() {
@@ -44,7 +45,7 @@ function App({ cableApp }) {
 function ChatScreen({ cableApp }) {
   let navigate = useNavigate();
 
-  const currentRoom = useSelector((state)=> state.room.value)
+  const currentRoom = useSelector((state) => state.room.value);
   //console.log(currentRoom)
   let token = localStorage.getItem("jwt_token");
   const [usersRooms, setUsersRooms] = useState([])
@@ -65,15 +66,15 @@ function ChatScreen({ cableApp }) {
     if (token) {
       fetchProfile();
     }
-  }, [])
+  }, []);
   const openChat = (room) => {
-    navigate(`/rooms/${room.id}`)
+    navigate(`/rooms/${room.id}`);
   };
   return (
     <div className="app">
       <div className="app__body">
         <Sidebar usersRooms={usersRooms} openChat={openChat} fetchProfile={fetchProfile}/>
-        <Chat cableApp={cableApp} />
+        <Chat cableApp={cableApp} usersRooms={usersRooms} openChat={openChat} />
       </div>
     </div>
   );
