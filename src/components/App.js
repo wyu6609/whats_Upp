@@ -53,7 +53,7 @@ function ChatScreen({ cableApp }) {
     <div className="app">
       <div className="app__body">
         <Sidebar usersRooms={usersRooms} openChat={openChat} />
-        <Chat cableApp={cableApp} />
+        <Chat cableApp={cableApp} usersRooms={usersRooms} openChat={openChat} />
       </div>
     </div>
   );

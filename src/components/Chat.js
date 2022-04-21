@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
 
 import InputEmoji from "react-input-emoji";
+import DropDownBtn from "./DropDownBtn";
 
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -21,7 +22,7 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = "en-US";
 
-const Chat = ({ cableApp }) => {
+const Chat = ({ cableApp, usersRooms, openChat }) => {
   const messageEl = useRef(null);
   const [messagePlaceHolder, setMessagePlaceHolder] =
     useState("Type a message...");
@@ -154,6 +155,9 @@ const Chat = ({ cableApp }) => {
           <IconButton onClick={handelShowUsers}>
             <MoreVertIcon />
           </IconButton>
+          <div className="dropdownmenu">
+            <DropDownBtn usersRooms={usersRooms} openChat={openChat} />
+          </div>
         </div>
       </div>
       {userMenu ? <UserMenu /> : null}
