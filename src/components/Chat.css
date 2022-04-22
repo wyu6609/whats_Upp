@@ -10,13 +10,22 @@
   align-items: center;
   border-bottom: 1px solid lightgray;
 }
+.chat-header-wow {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  flex-direction: column;
+}
 .chat-header-side {
   padding: 20px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid lightgray;
 }
-
+.add-friend-button{
+  width: 500px;
+}
 .chat-headerInfo {
   flex: 1;
   padding-left: 20px;
@@ -26,7 +35,15 @@
   margin-bottom: 3px;
   font-weight: 500;
 }
-
+.user-input-field{
+  margin-top: 7px;
+  text-align: center;
+}
+.user-input{
+  border-radius: 90px;
+  border: 1px solid black;
+  text-align: center;
+}
 .chat-message {
   position: relative;
   font-size: 16px;
@@ -129,3 +146,18 @@
     width: 90vw;
   }
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background-image: linear-gradient(180deg, #fff 0%, #57b550 99%);
+  box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+}
+

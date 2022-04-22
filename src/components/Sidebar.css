@@ -71,3 +71,16 @@
     display: none;
   }
 }
+.new-room-input{
+  margin-bottom: 10px;
+  border-radius: 90px;
+  border: 1px solid black;
+  text-align: center;
+  margin-left: 10px;
+}
+.form-button{
+  border: 1px solid black;
+  border-radius: 90px;
+  margin-left: 10px;
+  background-color: white;
+}

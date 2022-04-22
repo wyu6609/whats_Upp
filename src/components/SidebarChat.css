@@ -3,7 +3,7 @@
   padding: 20px;
   cursor: pointer;
   border: 1px solid #f6f6f6;
-
+  flex-direction: row;
 }
 
 .sidebarChat:hover {
@@ -27,3 +27,4 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+

@@ -10,7 +10,7 @@ function Message({ m, sender }) {
   return (
     <div>
       <p className={`chat-message ${sender && "chat-receiver"}`}>
-        <span className="chat-name">{currentUser.username}</span>
+        <span className="chat-name">{m.sender_name}</span>
         {m.content}
         <span className="chat-timestamp">{x}</span>
       </p>
