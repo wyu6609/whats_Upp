@@ -37,7 +37,6 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
   const [searchBarOn, setSearchBarOn] = useState(false);
 
   //searchFilter
-  /////////////////////////////////////////////////////////////////////////////////////
   const [chatSearch, setChatSearch] = useState("");
   const searchBarHandler = (event) => {
     setChatSearch(event.target.value);
@@ -50,7 +49,6 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       return message;
     }
   });
-  ///////////////////////////////////////////////////////////////////////////////////////
 
   //scrolls to the bottom on message update
   useEffect(() => {
@@ -119,6 +117,7 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       content: newMessage,
       user_id: currentUser.id,
       room_id: parseInt(currentRoom.room.id),
+      sender_name: currentUser.username
     };
     console.log("message", message);
     fetch("http://localhost:3000/messages", {
@@ -148,7 +147,7 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       <div className="chat-header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat-headerInfo">
-          {/* <h3>{currentRoom.room.attributes.name}</h3> */}
+        {/* <h3>{currentRoom.room.attributes.name}</h3> */}
           <p></p>
         </div>
         <div className="chat-headerRight">

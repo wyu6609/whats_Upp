@@ -73,7 +73,8 @@ function ChatScreen({ cableApp }) {
   return (
     <div className="app">
       <div className="app__body">
-        <Sidebar usersRooms={usersRooms} openChat={openChat} fetchProfile={fetchProfile}/>
+      
+        <Sidebar cableApp={cableApp} usersRooms={usersRooms} openChat={openChat} fetchProfile={fetchProfile}/>
         <Chat cableApp={cableApp} usersRooms={usersRooms} openChat={openChat} />
       </div>
     </div>

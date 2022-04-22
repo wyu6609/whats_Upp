@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 import { useSelector} from 'react-redux'
 import UserMenuCard from "./UserMenuCard"
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import {IconButton } from "@mui/material";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import './UserMenu.css'
 function UserMenu() {
     const currentRoom = useSelector((state)=> state.room.value)
     const currentUser = useSelector((state)=> state.user.value)
@@ -32,6 +36,7 @@ function UserMenu() {
     }
     function handleSubmit(e){
       e.preventDefault();
+      handleClick();
       fetch("http://localhost:3000/chats", {
         method: "POST",
         headers: {
@@ -48,17 +53,31 @@ function UserMenu() {
         console.log(data)
       })
     }
+    const styleForButton = {
+      'font-size': '25px',
+      'margin-left': '20px',
+    };
   return (
-    <div className="chat-header">
+    <div className="chat-header-wow">
+    <div className="chat-header-menu">
+
     {currentRoom.users.data.map((m)=>{
         return (<UserMenuCard key={m.id} m={m}/>)
     })}
-    <button onClick={()=>handleClick()}>Add A Member</button>
-    {addMemberToggle? <form onSubmit={(e)=>handleSubmit(e)}>
-      <input type="text" name="name" value={textField} onChange={(e)=>handleChange(e)} placeholder="Username"></input>
+    </div>
+    <div className="chat-header-menu">
+    {addMemberToggle?null:<IconButton  onClick={()=>handleClick()}>
+    <GroupAddIcon style={styleForButton}/>
+    </IconButton>
+    }
+    {addMemberToggle? <form className='user-input-field' onSubmit={(e)=>handleSubmit(e)}>
+      <input className='user-input' type="text" name="name" value={textField} onChange={(e)=>handleChange(e)} placeholder="Username"></input>
     </form>
     :null}
-    <button onClick={() => handleDelete()}>Leave Room</button>
+    <IconButton  onClick={()=>handleDelete()}>
+    <ExitToAppIcon style={styleForButton}/>
+    </IconButton>
+    </div>
     </div>
   )
 }

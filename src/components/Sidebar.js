@@ -9,7 +9,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SidebarChat from "./SidebarChat";
 import { useSelector, useDispatch } from "react-redux";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-const Sidebar = ({ usersRooms, openChat, fetchProfile }) => {
+const Sidebar = ({ usersRooms, openChat, fetchProfile, cableApp }) => {
   const navigate = useNavigate();
   const [newChatform, setNewChatform] = useState(false);
   const [roomName, setRoomName] = useState("");
@@ -43,6 +43,7 @@ const Sidebar = ({ usersRooms, openChat, fetchProfile }) => {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    console.log("submited");
     fetch("http://localhost:3000/rooms", {
       method: "POST",
       headers: {
@@ -72,6 +73,7 @@ const Sidebar = ({ usersRooms, openChat, fetchProfile }) => {
           {/* SIGNOUT BTN AND FUNCTIONALITY HERE */}
           <IconButton
             onClick={() => {
+              cableApp.room.perform("disappear");
               navigate("/");
             }}
           >
@@ -95,21 +97,21 @@ const Sidebar = ({ usersRooms, openChat, fetchProfile }) => {
         {newChatform ? (
           <div className="sidebarChat no-select">
             <form onSubmit={(e) => handleSubmit(e)}>
-              <input
+              <input className="new-room-input"
                 type="text"
                 name="room"
                 value={roomName}
                 onChange={(e) => handleChange(e)}
                 placeholder="Room Name"
               ></input>
-              <input
+              <input className="new-room-input"
                 type="text"
                 name="desc"
                 value={roomDesc}
                 onChange={(e) => handleChange(e)}
                 placeholder="Room Description"
               ></input>
-              <button>CREATE</button>
+              <button className='form-button'>Submit</button>
             </form>
           </div>
         ) : null}
