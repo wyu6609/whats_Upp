@@ -6,12 +6,13 @@ function UserMenuCard({m}) {
     useEffect(() => {
       setSeed(Math.floor(Math.random() * 5000));
     }, []);
+    let status = m.attributes.online
   return (
     <div className='user-menu-card'>
     <div className="sidebarChat-info">
       <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
       <h2>{m.attributes.username}</h2>
-      <p>{m.attributes.online}</p>
+      <p className={status} >{status.toUpperCase()}</p>
     </div>
     </div>
   )

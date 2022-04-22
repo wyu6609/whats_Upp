@@ -33,15 +33,13 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
   const currentRoom = useSelector((state) => state.room.value);
   const currentUser = useSelector((state) => state.user.value);
   const [userMenu, setUserMenu] = useState(false);
-
+  const [roomTitleName, setRoomTitleName] = useState('');
   const [searchBarOn, setSearchBarOn] = useState(false);
-
   //searchFilter
   const [chatSearch, setChatSearch] = useState("");
   const searchBarHandler = (event) => {
     setChatSearch(event.target.value);
   };
-
   let filteredMessages = currentRoom.messages.filter((message) => {
     if (message.content.toLowerCase().includes(chatSearch.toLowerCase())) {
       return message;
@@ -141,14 +139,15 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       setUserMenu(false);
     }
   }
-
+  
   return (
     <div className="chat">
       <div className="chat-header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="chat-headerInfo">
-        {/* <h3>{currentRoom.room.attributes.name}</h3> */}
-          <p></p>
+        <h2>
+        {roomTitleName}
+        </h2>
         </div>
         <div className="chat-headerRight">
           <input
