@@ -6,7 +6,6 @@ WhatsUpp is a chat app built on Rails and React with the focus of group chat fun
 
 <p align="center"><img src = "/git-demo/demo.gif"/></p>
 
-
 ## Technology Stack
 
 - React.js
@@ -26,7 +25,7 @@ WhatsUpp is a chat app built on Rails and React with the focus of group chat fun
 
 ## User can create a new chatroom, see all current members in the chatroom, their online status, and invite another user into the chatroom.
 
-<p align="center"><img src = ""/></p>
+<p align="center"><img src = "/git-demo/create-chat.gif"/></p>
 
 ## User can send emojis and use voice to text functionality to send messages.
 
