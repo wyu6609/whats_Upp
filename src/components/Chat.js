@@ -1,4 +1,5 @@
 import { React, useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Chat.css";
 import { Avatar, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,7 +12,7 @@ import StatusWebSocket from "./StatusWebSocket";
 import Message from "./Message";
 import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
-
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import InputEmoji from "react-input-emoji";
 import DropDownBtn from "./DropDownBtn";
 
@@ -23,6 +24,7 @@ mic.interimResults = true;
 mic.lang = "en-US";
 
 const Chat = ({ cableApp, usersRooms, openChat }) => {
+  const navigate = useNavigate();
   const messageEl = useRef(null);
   const [messagePlaceHolder, setMessagePlaceHolder] =
     useState("Type a message...");
@@ -33,7 +35,7 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
   const currentRoom = useSelector((state) => state.room.value);
   const currentUser = useSelector((state) => state.user.value);
   const [userMenu, setUserMenu] = useState(false);
-  const [roomTitleName, setRoomTitleName] = useState('');
+  const [roomTitleName, setRoomTitleName] = useState("");
   const [searchBarOn, setSearchBarOn] = useState(false);
   //searchFilter
   const [chatSearch, setChatSearch] = useState("");
@@ -115,7 +117,7 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       content: newMessage,
       user_id: currentUser.id,
       room_id: parseInt(currentRoom.room.id),
-      sender_name: currentUser.username
+      sender_name: currentUser.username,
     };
     console.log("message", message);
     fetch("http://localhost:3000/messages", {
@@ -139,15 +141,23 @@ const Chat = ({ cableApp, usersRooms, openChat }) => {
       setUserMenu(false);
     }
   }
-  
+
   return (
     <div className="chat">
       <div className="chat-header">
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+        <div className="mobile-logout-btn">
+          <IconButton
+            onClick={() => {
+              cableApp.room.perform("disappear");
+              navigate("/");
+            }}
+          >
+            <ExitToAppIcon />
+          </IconButton>
+        </div>
         <div className="chat-headerInfo">
-        <h2>
-        {roomTitleName}
-        </h2>
+          <h2>{roomTitleName}</h2>
         </div>
         <div className="chat-headerRight">
           <input
