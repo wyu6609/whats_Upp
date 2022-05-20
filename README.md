@@ -4,8 +4,8 @@
 
 WhatsUpp is a chat app built on Rails and React with the focus of group chat functionality. It is also mobile responsive. Inspired by the popular messaging app, WhatsApp!
 
-<p align="center"><img src = ""/></p>
-<p align="center"><img src = "/git-demo/mobile-demo.gif"/></p>
+<p align="center"><img src = "/git-demo/demo.gif"/></p>
+
 
 ## Technology Stack
 
@@ -18,7 +18,7 @@ WhatsUpp is a chat app built on Rails and React with the focus of group chat fun
 
 ## User can create an account and login
 
-<p align="center"><img src = ""/></p>
+<p align="center"><img src = "/git-demo/signup.gif"/></p>
 
 ## User can join a chatroom, send and receive messages in real-time.
 
