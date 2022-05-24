@@ -1,6 +1,6 @@
 # WhatsUpp
 
-<a href = "https://youtu.be/mZKe-pdVhlc">Demo</a>
+<a href = "https://youtu.be/mZKe-pdVhlc">Watch the app demo here!</a>
 
 ## Description
 
