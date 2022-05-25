@@ -1,4 +1,4 @@
-# WhatsUpp
+<h1 align = "center">WhatsUpp</h1>
 
 <p align = "center"><a href = "https://youtu.be/mZKe-pdVhlc">Watch the app demo here!</a></p>
 
