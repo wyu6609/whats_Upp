@@ -1,7 +1,7 @@
 <h1 align = "center">WhatsUpp</h1>
 
 <p align = "center"><a href = "https://youtu.be/mZKe-pdVhlc">Watch the app demo here!</a></p>
-<p align = "center"><a href = "https://illustrious-longma-22a381.netlify.app">Deployed app here!</a></p>
+<p align = "center"><a href = "https://illustrious-longma-22a381.netlify.app">Check out deployed app here!</a></p>
 ## Description
 
 WhatsUpp is a chat app built on Rails and React with the focus of group chat functionality. It is also mobile responsive. Inspired by the popular messaging app, WhatsApp!
